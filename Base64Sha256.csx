@@ -6,7 +6,10 @@ if (!Args.Any())
     return;
 }
 
-var value = Encoding.UTF8.GetBytes(Args[0]);
-var hasher = SHA256.Create();
-var hash = hasher.ComputeHash(value);
-Console.WriteLine(Convert.ToBase64String(hash));
+using (var sha = SHA256.Create())
+{
+    var bytes = Encoding.UTF8.GetBytes(Args[0]);
+    var hash = sha.ComputeHash(bytes);
+
+    Console.WriteLine(Convert.ToBase64String(hash));
+}
